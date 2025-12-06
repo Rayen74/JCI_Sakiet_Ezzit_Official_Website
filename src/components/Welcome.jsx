@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Home from '../assets/Home.png';
 import { 
   CalendarIcon, 
@@ -8,8 +9,8 @@ import {
   BriefcaseIcon, 
   UserGroupIcon, 
   UserIcon,
-  EyeIcon,           // ← New: for Vision
-  RocketLaunchIcon   // ← New: for Mission
+  EyeIcon,
+  RocketLaunchIcon
 } from '@heroicons/react/24/solid';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 
@@ -35,10 +36,15 @@ const Welcome = () => {
   const whiteSectionRef = useRef(null);
   const isInView = useInView(whiteSectionRef, { once: true, margin: '-50px' });
   const shouldReduceMotion = useReducedMotion();
+  const navigate = useNavigate();
 
   // Navigation handlers
   const handleNavigate = (path) => {
-    console.log('Navigate to:', path);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    navigate(path);
   };
 
   const axes = [
@@ -65,7 +71,7 @@ const Welcome = () => {
   ];
 
   return (
-    <main className ="flex flex-col w-full min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <main className="flex flex-col w-full min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Hero Section */}
       <section className="container relative w-full px-4 py-6 mx-auto sm:py-8 md:py-12 max-w-7xl md:px-8">
         <div className="w-full mx-auto">
@@ -182,7 +188,7 @@ const Welcome = () => {
             <div className="w-16 h-1 rounded-full sm:w-20 bg-gradient-to-r from-blue-500 to-yellow-500"></div>
           </div>
 
-          {/* Vision & Mission – Now with real icons */}
+          {/* Vision & Mission */}
           <motion.div 
             className="grid gap-3 mb-6 sm:gap-4 lg:grid-cols-2 sm:mb-8"
             variants={itemVariants}
@@ -191,13 +197,13 @@ const Welcome = () => {
               {
                 title: 'Vision',
                 text: 'To be the foremost global network of young leaders.',
-                icon: EyeIcon,           // Professional Vision icon
+                icon: EyeIcon,
                 color: 'text-yellow-500'
               },
               {
                 title: 'Mission',
                 text: 'To provide leadership development opportunities that empower young people to create positive change.',
-                icon: RocketLaunchIcon,  // Dynamic Mission icon
+                icon: RocketLaunchIcon,
                 color: 'text-blue-600'
               },
             ].map((item, i) => (
