@@ -97,35 +97,17 @@ const projects = [
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: 'easeOut',
-    },
-  },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
 const headerVariants = {
   hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
 const Projects = () => {
@@ -184,7 +166,11 @@ const Projects = () => {
   const hasActiveFilters = selectedCategory !== 'All' || searchTerm !== '' || sortBy !== 'recent';
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+    /* paddingTop matches fixed navbar height — no content hidden underneath */
+    <main
+      className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-[#0096D6]/10"
+      style={{ paddingTop: '72px' }}
+    >
       {/* Header */}
       <motion.section
         ref={headerRef}
@@ -194,13 +180,13 @@ const Projects = () => {
         animate={isHeaderInView ? 'visible' : 'hidden'}
       >
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 rounded-full left-1/4 w-72 h-72 bg-blue-200/20 blur-3xl"></div>
-          <div className="absolute bottom-0 rounded-full right-1/4 w-96 h-96 bg-yellow-200/20 blur-3xl"></div>
+          <div className="absolute top-0 rounded-full left-1/4 w-72 h-72 bg-[#0096D6]/10 blur-3xl" />
+          <div className="absolute bottom-0 rounded-full right-1/4 w-96 h-96 bg-[#000033]/5 blur-3xl" />
         </div>
 
         <div className="mx-auto text-center max-w-7xl">
           <motion.div
-            className="inline-flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-blue-700 bg-blue-100 rounded-full sm:px-4 sm:text-sm sm:mb-6"
+            className="inline-flex items-center gap-2 px-3 py-2 mb-4 text-xs font-medium text-[#0096D6] bg-[#0096D6]/10 rounded-full sm:px-4 sm:text-sm sm:mb-6"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
@@ -210,13 +196,13 @@ const Projects = () => {
           </motion.div>
 
           <motion.h1
-            className="mb-4 text-3xl font-bold leading-tight text-gray-900 sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl"
+            className="mb-4 text-3xl font-bold leading-tight text-[#000033] sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
             Discover Our{' '}
-            <span className="text-transparent bg-gradient-to-r from-blue-600 to-yellow-500 bg-clip-text">
+            <span className="text-transparent bg-gradient-to-r from-[#0096D6] to-[#000033] bg-clip-text">
               Impact Projects
             </span>
           </motion.h1>
@@ -227,7 +213,9 @@ const Projects = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Explore our comprehensive portfolio of community-driven initiatives that create lasting positive change across Tunisia and beyond. Each project represents our commitment to leadership, innovation, and social impact.
+            Explore our comprehensive portfolio of community-driven initiatives that create lasting
+            positive change across Tunisia and beyond. Each project represents our commitment to
+            leadership, innovation, and social impact.
           </motion.p>
 
           <motion.div
@@ -237,34 +225,36 @@ const Projects = () => {
             transition={{ delay: 0.5 }}
           >
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600 sm:text-3xl">{projects.length}+</div>
+              <div className="text-2xl font-bold text-[#0096D6] sm:text-3xl">{projects.length}+</div>
               <div className="text-xs text-gray-600 sm:text-sm">Active Projects</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-500 sm:text-3xl">1000+</div>
+              <div className="text-2xl font-bold text-[#000033] sm:text-3xl">1000+</div>
               <div className="text-xs text-gray-600 sm:text-sm">Lives Impacted</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 sm:text-3xl">4</div>
+              <div className="text-2xl font-bold text-[#0096D6] sm:text-3xl">4</div>
               <div className="text-xs text-gray-600 sm:text-sm">Awards Won</div>
             </div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Filter, Search & Controls */}
-      <section className="sticky top-0 z-40 border-b shadow-sm bg-white/95 backdrop-blur-lg border-gray-200/50">
+      {/* ── Sticky filter bar ──
+          top-[72px] on mobile, top-[80px] on md+
+          so it sticks just below the fixed navbar, never behind it */}
+      <section className="sticky top-[72px] md:top-[80px] z-40 border-b shadow-sm bg-white/95 backdrop-blur-lg border-gray-200/50">
         <div className="px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
             {/* Search */}
             <div className="relative w-full lg:flex-1 lg:max-w-md">
-              <MagnifyingGlassIcon className="absolute w-4 h-4 text-black transform -translate-y-1/2 left-3 top-1/2 sm:w-5 sm:h-5" />
+              <MagnifyingGlassIcon className="absolute w-4 h-4 text-[#000033] transform -translate-y-1/2 left-3 top-1/2 sm:w-5 sm:h-5" />
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full py-2 pl-10 pr-10 text-sm text-black transition-all duration-200 bg-white border border-black rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent sm:py-3 sm:text-base"
+                className="w-full py-2 pl-10 pr-10 text-sm text-[#000033] transition-all duration-200 bg-white border border-[#000033] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0096D6] focus:border-transparent sm:py-3 sm:text-base"
               />
               {searchTerm && (
                 <button
@@ -272,47 +262,42 @@ const Projects = () => {
                   className="absolute p-1 transition-colors transform -translate-y-1/2 rounded-full right-2 top-1/2 sm:right-3 hover:bg-gray-200"
                   aria-label="Clear search"
                 >
-                  <XMarkIcon className="w-4 h-4 text-black" />
+                  <XMarkIcon className="w-4 h-4 text-[#000033]" />
                 </button>
               )}
             </div>
 
-            {/* Filters and controls */}
+            {/* Filters */}
             <div className="flex flex-wrap items-center w-full gap-2 sm:gap-3 lg:w-auto">
-              {/* Category Filter */}
               <div className="relative flex-1 min-w-[140px] sm:flex-initial">
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-2 pr-8 text-sm text-black transition-all duration-200 bg-white border border-black rounded-lg appearance-none sm:px-4 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="w-full px-3 py-2 pr-8 text-sm text-[#000033] transition-all duration-200 bg-white border border-[#000033] rounded-lg appearance-none sm:px-4 focus:outline-none focus:ring-2 focus:ring-[#0096D6] focus:border-transparent"
                   aria-label="Filter by category"
                 >
                   {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
+                    <option key={category} value={category}>{category}</option>
                   ))}
                 </select>
-                <FunnelIcon className="absolute w-4 h-4 text-black transform -translate-y-1/2 pointer-events-none right-2 top-1/2" />
+                <FunnelIcon className="absolute w-4 h-4 text-[#000033] transform -translate-y-1/2 pointer-events-none right-2 top-1/2" />
               </div>
 
-              {/* Sort Options */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="flex-1 min-w-[120px] sm:flex-initial px-3 sm:px-4 py-2 pr-8 text-sm transition-all duration-200 border border-black rounded-lg appearance-none bg-white text-black focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                className="flex-1 min-w-[120px] sm:flex-initial px-3 sm:px-4 py-2 pr-8 text-sm transition-all duration-200 border border-[#000033] rounded-lg appearance-none bg-white text-[#000033] focus:outline-none focus:ring-2 focus:ring-[#0096D6] focus:border-transparent"
                 aria-label="Sort projects"
               >
                 <option value="recent">Most Recent</option>
                 <option value="alphabetical">A-Z</option>
               </select>
 
-              {/* Clear Filters */}
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
                   className="flex items-center justify-center gap-2 px-3 py-2 text-sm transition-all duration-200 bg-gray-100 rounded-lg sm:px-4 hover:bg-gray-200 whitespace-nowrap"
-                  style={{ color: 'black' }}
+                  style={{ color: '#000033' }}
                 >
                   <XMarkIcon className="w-4 h-4" />
                   <span className="hidden sm:inline">Clear</span>
@@ -321,20 +306,19 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Active Filters Display */}
           {hasActiveFilters && (
             <div
               className="flex flex-wrap items-center gap-2 pt-4 mt-4 border-t border-gray-100"
               aria-live="polite"
-              style={{ color: 'black' }}
+              style={{ color: '#000033' }}
             >
               <span className="text-xs sm:text-sm">Active filters:</span>
               {selectedCategory !== 'All' && (
-                <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-black bg-blue-100 rounded-full sm:px-3">
+                <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-white bg-[#0096D6] rounded-full sm:px-3">
                   {selectedCategory}
                   <button
                     onClick={() => setSelectedCategory('All')}
-                    className="ml-1 p-0.5 rounded-full hover:bg-blue-200"
+                    className="ml-1 p-0.5 rounded-full hover:bg-[#0096D6]/80"
                     aria-label={`Remove filter ${selectedCategory}`}
                   >
                     <XMarkIcon className="w-3 h-3" />
@@ -342,11 +326,11 @@ const Projects = () => {
                 </span>
               )}
               {searchTerm && (
-                <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-black bg-green-100 rounded-full sm:px-3">
+                <span className="inline-flex items-center gap-1 px-2 py-1 text-xs text-[#000033] bg-[#0096D6]/10 rounded-full sm:px-3">
                   &quot;{searchTerm}&quot;
                   <button
                     onClick={() => setSearchTerm('')}
-                    className="ml-1 p-0.5 rounded-full hover:bg-green-200"
+                    className="ml-1 p-0.5 rounded-full hover:bg-gray-200"
                     aria-label="Clear search term"
                   >
                     <XMarkIcon className="w-3 h-3" />
@@ -358,25 +342,22 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Projects Listing */}
+      {/* Projects listing */}
       <section className="px-4 py-8 sm:px-6 lg:px-8 sm:py-12">
         <div className="mx-auto max-w-7xl">
-          {/* Summary */}
           <div className="flex items-center justify-between mb-6 sm:mb-8">
             <p className="text-sm text-gray-600 sm:text-base">
               Showing{' '}
-              <span className="font-semibold text-gray-900">{filteredAndSortedProjects.length}</span>{' '}
+              <span className="font-semibold text-[#000033]">{filteredAndSortedProjects.length}</span>{' '}
               {filteredAndSortedProjects.length === 1 ? 'project' : 'projects'}
               {selectedCategory !== 'All' && (
                 <span>
-                  {' '}
-                  in <span className="font-semibold text-blue-600">{selectedCategory}</span>
+                  {' '}in <span className="font-semibold text-[#0096D6]">{selectedCategory}</span>
                 </span>
               )}
             </p>
           </div>
-          
-          {/* Projects Grid */}
+
           <AnimatePresence mode="wait">
             {filteredAndSortedProjects.length > 0 ? (
               <motion.div
@@ -388,12 +369,7 @@ const Projects = () => {
                 exit="hidden"
               >
                 {filteredAndSortedProjects.map((project) => (
-                  <motion.div
-                    key={project.id}
-                    variants={itemVariants}
-                    layout
-                    className="h-full"
-                  >
+                  <motion.div key={project.id} variants={itemVariants} layout className="h-full">
                     <ProjectCard
                       image={project.image}
                       title={project.title}
@@ -420,13 +396,13 @@ const Projects = () => {
                 <div className="flex items-center justify-center w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-full sm:w-24 sm:h-24 sm:mb-6">
                   <MagnifyingGlassIcon className="w-10 h-10 text-gray-400 sm:w-12 sm:h-12" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-900 sm:text-xl">No projects found</h3>
+                <h3 className="mb-2 text-lg font-semibold text-[#000033] sm:text-xl">No projects found</h3>
                 <p className="max-w-md mx-auto mb-4 text-sm text-gray-600 sm:mb-6 sm:text-base">
-                  We couldn't find any projects matching your current filters. Try adjusting your search criteria or clearing the filters.
+                  We couldn't find any projects matching your current filters.
                 </p>
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center px-4 py-2 text-sm text-white transition-colors duration-200 bg-blue-600 rounded-lg sm:px-6 sm:py-3 sm:text-base hover:bg-blue-700"
+                  className="inline-flex items-center px-4 py-2 text-sm text-white transition-colors duration-200 bg-[#0096D6] rounded-lg sm:px-6 sm:py-3 sm:text-base hover:bg-[#0082ba]"
                 >
                   Clear All Filters
                 </button>
@@ -436,7 +412,6 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Modal */}
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}

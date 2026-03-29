@@ -35,7 +35,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
         <>
           {/* Backdrop with blur */}
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000033]/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -57,7 +57,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
               aria-modal="true"
               aria-labelledby="modal-title"
               aria-describedby="modal-description"
-              className="relative w-full max-w-5xl max-h-[92vh] pointer-events-auto overflow-hidden rounded-3xl bg-white dark:bg-gray-900 shadow-2xl outline-none"
+              className="relative w-full max-w-5xl max-h-[92vh] pointer-events-auto overflow-hidden rounded-3xl bg-white dark:bg-[#000033] shadow-2xl outline-none"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
               animate={{
@@ -79,7 +79,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
               {/* Close Button - Top Right */}
               <button
                 onClick={onClose}
-                className="absolute z-20 p-2 text-gray-500 transition-all duration-200 bg-white rounded-full shadow-lg top-4 right-4 hover:text-gray-900 hover:scale-110 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white"
+                className="absolute z-20 p-2 text-gray-500 transition-all duration-200 bg-white rounded-full shadow-lg top-4 right-4 hover:text-[#0096D6] hover:scale-110 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white"
                 aria-label="Close modal"
               >
                 <XMarkIcon className="w-6 h-6" />
@@ -96,7 +96,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
                       loading="lazy"
                     />
                     {/* Optional gradient overlay */}
-                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 to-transparent" />
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#000033]/30 to-transparent" />
                   </div>
                 </div>
 
@@ -104,7 +104,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
                 <div className="flex flex-col justify-center p-8 md:p-10 md:w-1/2">
                   <h2
                     id="modal-title"
-                    className="mb-6 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white"
+                    className="mb-6 text-3xl font-extrabold tracking-tight text-[#000033] sm:text-4xl dark:text-white"
                   >
                     
                     {title}
@@ -125,7 +125,7 @@ const Modal = ({ isOpen, onClose, image, title, description }) => {
                   <div className="mt-8">
                     <button
                       onClick={onClose}
-                      className="px-6 py-3 text-sm font-medium text-white transition-all duration-200 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-700 hover:to-purple-700 hover:shadow-xl active:scale-95"
+                      className="px-6 py-3 text-sm font-medium text-white transition-all duration-200 bg-gradient-to-r from-[#0096D6] to-[#000033] rounded-xl hover:shadow-xl active:scale-95"
                     >
                       Close
                     </button>

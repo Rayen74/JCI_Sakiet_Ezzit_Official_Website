@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   FaLightbulb,
   FaUsers,
@@ -10,108 +10,226 @@ import {
   FaGlobeAmericas,
 } from "react-icons/fa";
 
-// Icon mapping for each program
-const iconMap = {
-  "CYE (Creative Young Entrepreneurs)": FaLightbulb,
-  "TOYP (Ten Outstanding Young People)": FaUsers,
-  Awards: FaAward,
-  "Public Speaking and Debate": FaMicrophone,
-  Twinning: FaHandshake,
-  "100% Efficiency": FaRegSmile,
-  "JCI RISE": FaGlobeAmericas,
-};
+/* ─── palette ───────────────────────────────────── */
+const C = { navy: '#0a1128', teal: '#4db7e8', green: '#46b8a2' };
 
-// Programs data with names and descriptions
+/* ─── data ──────────────────────────────────────── */
 const programs = [
   {
-    name: "CYE (Creative Young Entrepreneurs)",
+    name: "CYE",
+    full: "Creative Young Entrepreneurs",
+    icon: FaLightbulb,
+    accent: C.teal,
     description:
       "Empowers young entrepreneurs through mentorship, training, and business pitch competitions designed to foster creativity and innovation.",
   },
   {
-    name: "TOYP (Ten Outstanding Young People)",
+    name: "TOYP",
+    full: "Ten Outstanding Young People",
+    icon: FaUsers,
+    accent: C.green,
     description:
       "Recognizes and celebrates the achievements of ten young people who excel in their respective fields and positively impact their communities.",
   },
   {
     name: "Awards",
+    full: "JCI Recognition Awards",
+    icon: FaAward,
+    accent: C.teal,
     description:
       "Honors exceptional individuals and projects demonstrating leadership, impact, and alignment with the values of JCI.",
   },
   {
-    name: "Public Speaking and Debate",
+    name: "Debate",
+    full: "Public Speaking and Debate",
+    icon: FaMicrophone,
+    accent: C.green,
     description:
-      "Enhances communication and critical thinking skills through structured public speaking and debate contests.",
+      "Enhances communication and critical thinking skills through structured training and competitive events in public speaking and debating.",
   },
   {
     name: "Twinning",
+    full: "International Chapter Twinning",
+    icon: FaHandshake,
+    accent: C.teal,
     description:
-      "Fosters international cooperation and cultural exchange by building partnerships with other JCI chapters around the world.",
+      "Promotes international collaboration and friendship by connecting JCI chapters across borders to share best practices and work on joint projects.",
   },
   {
     name: "100% Efficiency",
+    full: "Chapter Management Excellence",
+    icon: FaRegSmile,
+    accent: C.green,
     description:
-      "Promotes optimal chapter performance and operational excellence by increasing effectiveness and productivity.",
+      "A program aimed at optimizing chapter management and operations to ensure maximum impact and member engagement.",
   },
   {
     name: "JCI RISE",
+    full: "Rebuild, Invest, Sustain, Evolve",
+    icon: FaGlobeAmericas,
+    accent: C.teal,
     description:
-      "Supports economic resilience and sustainable growth with targeted programs under the global JCI RISE framework.",
+      "An initiative focused on rebuilding, investing, sustaining, and evolving economies and communities in response to global challenges.",
   },
 ];
 
-const ProgramCard = ({ program }) => {
-  const Icon = iconMap[program.name];
-  const titleId = `${program.name.replace(/\s+/g, "-")}-title`;
-  const descId = `${program.name.replace(/\s+/g, "-")}-desc`;
+/* ─── card component ────────────────────────────── */
+const ProgramCard = ({ program, index }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+  const Icon = program.icon;
 
   return (
     <motion.article
-      tabIndex={0}
-      role="article"
-      aria-labelledby={titleId}
-      aria-describedby={descId}
-      className="relative flex flex-col items-center justify-start w-full max-w-sm p-6 m-0 transition-transform transform bg-white shadow-lg cursor-pointer select-none sm:p-8 rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-400"
-      whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 220, 0, 0.25)" }}
-      whileFocus={{ scale: 1.05, boxShadow: "0 10px 25px rgba(255, 220, 0, 0.4)" }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      style={{ fontFamily: "Inter, sans-serif" }}
+      ref={ref}
+      className="flex flex-col gap-4 rounded-2xl p-7"
+      style={{ background: '#fff', border: '1px solid rgba(10,17,40,0.07)' }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: 'easeOut' }}
     >
-      <span
-        aria-hidden="true"
-        className="flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 text-4xl text-white rounded-full shadow-lg sm:w-20 sm:h-20 sm:mb-6 sm:text-5xl bg-gradient-to-r from-blue-600 to-blue-400"
-      >
-        {Icon && <Icon />}
-      </span>
-      <h2
-        id={titleId}
-        className="mb-3 text-lg font-extrabold leading-tight text-center text-blue-900 sm:mb-5 sm:text-xl md:text-2xl"
-      >
-        {program.name}
-      </h2>
-      <p
-        id={descId}
-        className="text-sm leading-relaxed text-center text-gray-700 sm:text-base"
-      >
+      {/* top row: number + icon */}
+      <div className="flex items-start justify-between">
+        <span
+          className="text-xs font-black tracking-[0.15em]"
+          style={{ color: `${program.accent}70` }}
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <div
+          className="flex items-center justify-center w-11 h-11 rounded-xl"
+          style={{ background: `${program.accent}14` }}
+        >
+          <Icon style={{ color: program.accent, fontSize: '1.1rem' }} />
+        </div>
+      </div>
+
+      {/* name + full */}
+      <div>
+        <h3 className="text-base font-black tracking-wide uppercase" style={{ color: C.navy }}>
+          {program.name}
+        </h3>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] mt-0.5" style={{ color: `${program.accent}` }}>
+          {program.full}
+        </p>
+      </div>
+
+      {/* description */}
+      <p className="flex-1 text-sm leading-relaxed" style={{ color: 'rgba(10,17,40,0.52)' }}>
         {program.description}
       </p>
+
+      {/* bottom accent */}
+      <div className="h-0.5 w-8 rounded-full" style={{ background: program.accent }} />
     </motion.article>
   );
 };
 
+/* ─── page ──────────────────────────────────────── */
 export default function Activity() {
+  const headerRef = useRef(null);
+  const inView = useInView(headerRef, { once: true });
+
   return (
     <main
-      className="flex flex-col items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 sm:py-16 md:px-12 md:py-24"
-      lang="en"
+      className="min-h-screen font-sans"
+      style={{ background: '#f0f4f8', paddingTop: '72px' }}
     >
-      <h1 className="mb-10 text-4xl font-extrabold tracking-tight text-center text-blue-700 select-none sm:mb-14 sm:text-5xl md:text-6xl">
-        Programs
-      </h1>
-      <section className="grid w-full grid-cols-1 gap-6 max-w-7xl sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-8 md:gap-10">
-        {programs.map((program) => (
-          <ProgramCard key={program.name} program={program} />
-        ))}
+      {/* ── Hero header ── */}
+      <section
+        ref={headerRef}
+        className="relative flex flex-col items-center justify-center w-full px-6 py-20 overflow-hidden text-center md:py-28"
+        style={{ background: C.navy }}
+      >
+        {/* subtle radial glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(77,183,232,0.09) 0%, transparent 70%)'
+        }} />
+
+        <motion.p
+          className="text-[10px] font-black tracking-[0.3em] uppercase mb-4"
+          style={{ color: C.green }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          JCI Sakiet Ezzit
+        </motion.p>
+
+        <motion.h1
+          className="font-black leading-none uppercase"
+          style={{ fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: '#fff', letterSpacing: '0.02em' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65, delay: 0.1 }}
+        >
+          Our{' '}
+          <em className="not-italic" style={{ color: C.teal, fontStyle: 'italic' }}>Programs</em>
+        </motion.h1>
+
+        <motion.div
+          className="my-6 rounded-full"
+          style={{ width: 48, height: 3, background: `linear-gradient(90deg,${C.teal},${C.green})` }}
+          initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        />
+
+        <motion.p
+          className="max-w-xl text-sm leading-relaxed md:text-base"
+          style={{ color: 'rgba(255,255,255,0.48)' }}
+          initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.35 }}
+        >
+          Seven international frameworks that develop skills, foster leadership,
+          and connect young citizens across the globe.
+        </motion.p>
+
+        {/* stat pills */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mt-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.45 }}
+        >
+          {[
+            { value: '7', label: 'Active Programs' },
+            { value: '120+', label: 'Countries' },
+            { value: '100+', label: 'Years of JCI' },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2 px-5 py-2 rounded-full"
+              style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}
+            >
+              <span className="text-base font-black" style={{ color: i % 2 === 0 ? C.teal : C.green }}>{s.value}</span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                {s.label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* ── Section label ── */}
+      <div className="w-full max-w-6xl px-4 pt-12 pb-5 mx-auto md:px-8">
+        <div className="flex items-center gap-4">
+          <p className="text-[10px] font-black tracking-[0.3em] uppercase whitespace-nowrap" style={{ color: C.teal }}>
+            All Programs
+          </p>
+          <div className="flex-1 h-px" style={{ background: 'rgba(10,17,40,0.1)' }} />
+          <p className="text-[10px] font-bold tracking-[0.15em] uppercase whitespace-nowrap" style={{ color: 'rgba(10,17,40,0.28)' }}>
+            {programs.length} total
+          </p>
+        </div>
+      </div>
+
+      {/* ── Grid ── */}
+      <section className="w-full max-w-6xl px-4 pb-20 mx-auto md:px-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {programs.map((program, index) => (
+            <ProgramCard key={index} program={program} index={index} />
+          ))}
+        </div>
       </section>
     </main>
   );
