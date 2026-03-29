@@ -19,6 +19,10 @@ const C = { navy: '#0a1128', teal: '#4db7e8', green: '#46b8a2' };
 
 /* ─── variants ───────────────────────────────────── */
 const reveal = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+const revealShift = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
@@ -73,7 +77,7 @@ const Welcome = () => {
       <section
         id="hero"
         className="relative flex flex-col items-center justify-center w-full overflow-hidden"
-        style={{ minHeight: 'calc(100vh - 80px)' }}
+        style={{ minHeight: 'calc(100svh - 80px)' }}
       >
         {/* bg */}
         <div className="absolute inset-0">
@@ -177,7 +181,7 @@ const Welcome = () => {
       ════════════════════════════════════════ */}
       <motion.section
         id="about"
-        className="relative z-10 w-full max-w-6xl px-4 mx-auto -translate-y-16 md:px-8"
+        className="relative z-10 w-full max-w-6xl px-4 mx-auto -mt-16 md:px-8"
         variants={reveal} initial="hidden"
         whileInView="visible" viewport={{ once: true, margin: '-40px' }}
       >
@@ -205,9 +209,9 @@ const Welcome = () => {
             </div>
 
             {/* stats — 1 col, stacked */}
-            <div className="grid grid-cols-3 divide-x md:grid-cols-1 md:divide-y md:divide-x-0" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
+            <div className="grid grid-cols-3 divide-x md:grid-cols-1 md:divide-y md:divide-x-0 min-h-[140px]" style={{ borderColor: 'rgba(255,255,255,0.07)' }}>
               {stats.map((s, i) => (
-                <div key={i} className="flex flex-col items-center justify-center gap-1 p-5 text-center">
+                <div key={i} className="flex flex-col items-center justify-center gap-1 p-5 text-center min-h-[80px] md:min-h-[100px]">
                   <s.icon className="w-4 h-4 mb-1" style={{ color: s.accent }} />
                   <span className="text-3xl font-black leading-none md:text-4xl" style={{ color: '#fff' }}>{s.value}</span>
                   <span className="text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5" style={{ color: 'rgba(255,255,255,0.32)' }}>
@@ -230,7 +234,7 @@ const Welcome = () => {
         variants={stagger} initial="hidden"
         animate={inView ? 'visible' : 'hidden'}
       >
-        <motion.div className="grid gap-4 md:grid-cols-5" variants={item}>
+        <motion.div className="grid gap-4 md:grid-cols-5" variants={revealShift}>
 
           {/* Vision — compact, dark, 2/5 */}
           <div

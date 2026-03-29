@@ -81,23 +81,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full shadow-2xl bg-[#0a1128] border-b border-[#4db7e8]/20">
-      <div className="flex items-center justify-between px-4 py-1 mx-auto max-w-7xl md:px-8">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full h-[72px] md:h-[80px] flex items-center shadow-2xl bg-[#0a1128] border-b border-[#4db7e8]/20">
+      <div className="flex items-center justify-between w-full px-4 mx-auto max-w-7xl md:px-8">
 
         {/* ── Logo & Title ── */}
         <div className="flex items-center gap-10">
-          <div className="relative flex items-center px-0 scale-[1.5] ml-6 transition-all duration-300">
+          <div className="relative flex items-center px-0 scale-[1.35] ml-6 transition-all duration-300">
             {/* Extremely Thin Background Plate - Shorter than Logo */}
-            <div className="absolute inset-x-0 bottom-4 top-4 bg-white rounded shadow-2xl transition-all duration-300"></div>
+            <div className="absolute inset-x-0 bottom-2 top-2 bg-white rounded shadow-2xl transition-all duration-300"></div>
             <img
               src={Logo}
               alt="JCI Logo"
-              width="96"
-              height="96"
-              className="relative z-10 object-contain h-16 w-auto md:h-24"
+              width="64"
+              height="64"
+              className="relative z-10 object-contain h-12 w-auto md:h-16"
             />
           </div>
-          <span className="text-xl font-black tracking-widest text-white uppercase md:text-3xl leading-none">
+          <span className="text-lg font-black tracking-widest text-white uppercase md:text-2xl leading-none">
             JCI <span className="text-[#4db7e8]">Sakiet Ezzit</span>
           </span>
         </div>
